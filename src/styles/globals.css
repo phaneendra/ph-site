@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.task-list-item::before {
+  @apply hidden;
+}
+
+.task-list-item {
+  @apply list-none;
+}
+
+.footnotes {
+  @apply border-border-color mt-12 border-t pt-8;
+}
+
+.csl-entry {
+  @apply my-5;
+}
+
+/* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* Link underline effects */
+.link-underline {
+  position: relative;
+}
+
+.link-underline:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: linear-gradient(transparent, transparent),
+    linear-gradient(
+      to right,
+      rgb(var(--color-primary) / 85%),
+      rgb(var(--color-secondary) / 85%)
+    );
+  transition: width 0.25s ease;
+  -webkit-transition: width 0.25s ease;
+}
+
+.link-underline:hover:after {
+  width: 100%;
+  left: 0;
+  background: linear-gradient(transparent, transparent),
+    linear-gradient(
+      to right,
+      rgb(var(--color-primary) / 85%),
+      rgb(var(--color-secondary) / 85%)
+    );
+}
+
+/* Button glass effects */
+.glass,
+.glass:hover,
+.glass:active {
+  border: none;
+  backdrop-filter: blur(40px);
+  background-color: transparent;
+  background-image: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 30%) 0%,
+      rgb(0 0 0 / 0%) 100%
+    ),
+    linear-gradient(100deg, rgb(255 255 255 / 10%) 25%, rgb(0 0 0 / 0%) 25%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 10%) inset, 0 0 0 2px rgb(0 0 0 / 5%);
+  text-shadow: 0 1px rgb(0 0 0 / 5%);
+}

@@ -1,0 +1,77 @@
+---
+title: Vscode Markdown Essentials
+date: '2022-11-04'
+tags: ['markdown', 'vscode', 'mdx']
+draft: false
+summary: A list of essential extentions for Markdown Editing.
+---
+
+I moved from SublimeText to VSCode for almost more than five year's and I'm happy about my productivity.
+
+Most of the time, I'm editing Markdown.
+
+Let me share these 5 extensions which are useful for boosting your productivity on Markdown.
+
+## Markdown All in One
+
+[Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) is a must one for editing Markdown. It contains Markdown preview,  
+keyboard shortcuts, auto preview, and more.
+
+The shortcuts will make editing Markdown much easy:
+
+![file:tab](/static/images/vscode-markdown-essentials/tab-backspace.gif)
+
+The completion also contains path finding:
+
+![file:vscode-markdown](/static/images/vscode-markdown-essentials/vscode-markdown-all-in-one.gif)
+
+We can print Markdown to HTML with the command: `Markdown: Print current document to HTML`.
+
+Furthermore, it comes with a beautiful Math support:
+
+![img:vscode-math](/static/images/vscode-markdown-essentials/markdown-math.png)
+
+## Dictionary Completion
+
+[Dictionary Completion](https://marketplace.visualstudio.com/items?itemName=yzhang.dictionary-completion) is another extension to help you input English words quicker. Because I'm not a native English speaker, this helps me to write words correctly:
+
+![img:vscode-dict](/static/images/vscode-markdown-essentials/vscode-markdown-dict.gif)
+
+Markdown does not support quick suggestions in default, we need to add the below snippet to make hints appear when type in a Markdown file:
+
+```
+"[markdown]": {    "editor.quickSuggestions": true}
+```
+
+## Paste Image
+
+I'd love to insert more screenshots to my Markdown files. [Paste Image](https://marketplace.visualstudio.com/items?itemName=mushan.vscode-paste-image) helps me save my images from xclip. This extension supports Mac/Windows/Linux.
+
+![img:markdown-paste-img](/static/images/vscode-markdown-essentials/vscode-paste-image.gif)
+
+## PlantUML
+
+[PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) is an awesome extension if you need to draw diagrams.  
+In PlantUML, diagrams are defined using a [simple and intuitive language](https://plantuml.com/). When you editing the source files of the diagrams, you can also preview the result:
+
+![img:markdown-plantuml](/static/images/vscode-markdown-essentials/plantuml-demo.gif)
+
+PlantUML supports all kinds of diagrams used by developers, such as sequence diagrams, object and class diagrams, etc.
+
+If you already familiar with Draw.io, you will like another extension [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio).
+
+![img:draw-io](/static/images/vscode-markdown-essentials/drawio-liveshare-demo.gif)
+
+## Markdown Emoji
+
+We need more smiles!
+
+[Markdown Emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji) does one simple thing: add some Emoji faces in your document.
+
+![img:emoji](/static/images/vscode-markdown-essentials/markdown-emoji.png)
+
+But I found a defect for this extension, my Hexo rendered result does not show Emoji correct in HTML. There is another similar extension [Emoji](https://marketplace.visualstudio.com/items?itemName=Perkovec.emoji) solves this issue. And you can even add Emoji in code:
+
+![img:markdown-emoji](/static/images/vscode-markdown-essentials/markdown-emoji-2.gif)
+
+That all, happy editing Markdown!

@@ -1,0 +1,46 @@
+{
+  "title": "Learning Notes | Phaneendra",
+  "author": "Phaneendra",
+  "headerTitle": "Learning Notes",
+  "headerNavLinks": [
+    { "href": "/blog", "title": "Blog" },
+    { "href": "/tags", "title": "Tags" },
+    { "href": "/projects", "title": "Projects" },
+    { "href": "/about", "title": "About" }
+  ],
+  "description": "My personal ramblings and notes about various topics I learn every day",
+  "language": "en-us",
+  "theme": "system",
+  "siteUrl": "https://phaneendra.vercel.app",
+  "siteRepo": "https://github.com/phaneendra/phaneendra.github.com",
+  "siteLogo": "/static/images/logo.svg",
+  "image": "/static/images/phaneendra.avatar.jpeg",
+  "socialBanner": "/static/images/twitter-card.png",
+  "email": "phaneendra.krishnareddy@gmail.com",
+  "github": "https://github.com/phaneendra",
+  "twitter": "https://twitter.com/phaneekr",
+  "facebook": "https://facebook.com",
+  "youtube": "https://youtube.com",
+  "linkedin": "https://www.linkedin.com/in/phaneendra-krishnareddy-69495b38/",
+  "locale": "en-US",
+  "analytics": {
+    "plausibleDataDomain": "",
+    "simpleAnalytics": false,
+    "umamiWebsiteId": "",
+    "googleAnalyticsId": ""
+  },
+  "newsletter": {
+    "provider": "buttondown"
+  },
+  "commentProvider": "giscus",
+  "giscusConfigMapping": "pathname",
+  "giscusConfigReactions": "1",
+  "giscusConfigMetadata": "0",
+  "giscusConfigTheme": "light",
+  "giscusConfigDarkTheme": "transparent_dark",
+  "giscusConfigThemeURL": "",
+  "utterancesConfigIssueTerm": "",
+  "utterancesConfigLabel": "",
+  "utterancesConfigTheme": "",
+  "utterancesConfigDarkTheme": ""
+}

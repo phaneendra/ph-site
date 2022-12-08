@@ -1,0 +1,173 @@
+---
+title: Merging Tailwind Classes in React JS
+date: '2022-11-22'
+tags: ['tailwindcss', 'code', 'css', 'react']
+draft: false
+summary: Learning how to use before and after pseudo selectors in Tailwind.
+---
+
+## The problem
+
+Imagine you create a simple React component that displays a pre-styled blue button using Tailwind CSS and allows adding more classes to customize it.
+
+```
+function Button({ label, className, ...props }) {
+  const classes = `
+    border
+    border-black
+    bg-blue-600
+    p-4
+    rounded-lg
+    text-white
+    text-xl
+    ${className ?? ""}
+  `;
+  return <button className={classes}>{label}</button>;
+}
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+You can use it as:
+
+```
+<Button label="Hello" />
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+[![Button with blue background](https://res.cloudinary.com/practicaldev/image/fetch/s--uR0-A_Rw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/atwftmsoej5kyhdpa41x.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--uR0-A_Rw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/atwftmsoej5kyhdpa41x.png)
+
+Default blue button styling
+
+And it works as advertised. Now you want to change its color to red:
+
+```
+<Button label="Hello" className="bg-red-600"/>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+[![Button with blue background](https://res.cloudinary.com/practicaldev/image/fetch/s--uR0-A_Rw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/atwftmsoej5kyhdpa41x.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--uR0-A_Rw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/atwftmsoej5kyhdpa41x.png)
+
+Customized red button... wait!?
+
+What just happened? I added the new CSS class to `className`, so let's check if it's actually included in the rendered HTML:
+
+```
+<button class="
+    border
+    border-black
+    bg-blue-600
+    p-4
+    rounded-lg
+    text-white
+    text-xl
+    bg-red-600
+  ">Hello</button>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+It's right there at the end - `bg-red-600`, and it comes after `bg-blue-600`. A class should override anything that came before it, right?
+
+Wrong.
+
+## The cause
+
+It turns out that the space-separated CSS class list that the `class` HTML attribute accepts is not treated as a list when calculating CSS rules precedence by the browser. **The `class` attribute actually contains the _set_ of classes the element has, so the order doesn't matter.**
+
+This problem is not specific to Tailwind. It can happen with any two CSS classes that set the same CSS attributes. It can be as simple as:
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .red {
+        color: red;
+      }
+
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="blue red">Sample red text... not!</p>
+  </body>
+</html>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+[![Button with blue background](https://res.cloudinary.com/practicaldev/image/fetch/s--bQXbLUuj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/459iskmo0sbys1w7ootb.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--bQXbLUuj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/459iskmo0sbys1w7ootb.png)
+
+The .blue rule overrides the .red rule
+
+As the order that the classes appear in the `class` attribute doesn't matter, **the rule that comes later _in the CSS stylesheets_ wins**.
+
+Coming back to Tailwind, this means that if, by coincidence, the Tailwind stylesheet file defines the `.bg-blue-600` rule _after_ the `.bg-red-600`, then `bg-blue-600` will win every time.
+
+## The solution
+
+### Non-Tailwind
+
+Sometimes it's possible to workaround this by changing your stylesheet and the [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) of the rules applied to the element. All of the following rules have higher priority than the original `.red` rule (and win over the original `.blue` rule):
+
+```
+p.red
+.red.blue
+#special
+body .red
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+There's a [neat specificity calculator](https://specificity.keegan.st/) that's worth checking.
+
+### Tailwind
+
+Now the solution above won't work with Tailwind, as its very concept is to have utility classes that you can use without changing any stylesheets.
+
+When you don't know what classes may appear after your own, you need a way to detect clashes and remove all but the last occurrence. This is exactly what the [tailwind-merge](https://www.npmjs.com/package/tailwind-merge) npm package does.
+
+You can use it like:
+
+```
+import { twMerge } from "tailwind-merge";
+
+function Button({ label, className, ...props }) {
+  const classes = twMerge(`
+    border
+    border-black
+    bg-blue-600
+    p-4
+    rounded-lg
+    text-white
+    text-xl
+    ${className ?? ""}
+  `);
+  return <button className={classes}>{label}</button>;
+}
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+[![Button with red background](https://res.cloudinary.com/practicaldev/image/fetch/s--1Nef3DCr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/55423zyztn46syjimq41.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--1Nef3DCr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/55423zyztn46syjimq41.png)
+
+Button with the correct color
+
+And we can verify that the rendered HTML does not contain `bg-blue-600` anymore:
+
+```
+<button class=" border border-black p-4 rounded-lg text-white text-xl bg-red-600 ">Hello</button>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+## Conclusion
+
+Due to the fact that the order of CSS class names in the `class` HTML attribute does not matter, the only way to override existing classes in an element is to remove all of the previous classes that clash with the new one.
+
+What do you think? Did you face this issue before? Do you know a better way to override the Tailwind classes that come before the new ones?

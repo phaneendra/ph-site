@@ -1,0 +1,41 @@
+---
+title: Tailwind Css using before and after pseudo selectors
+date: '2022-11-17'
+tags: ['tailwindcss', 'code', 'css']
+draft: false
+summary: Learning how to use before and after pseudo selectors in Tailwind.
+---
+
+![Cover image for How to use ::before and ::after in Tailwind CSS](https://res.cloudinary.com/practicaldev/image/fetch/s--aBhGhpEH--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/me3e01su54184ky4lfwz.png)
+
+In this article we are going to learn that how you can use `::before` and `::after` selectors in Tailwind CSS. If you don't know what [Tailwind CSS](https://tailwindcss.com/) is then you should look into it because it's just awesome. And trust me If you got used to it then you could not leave.
+
+Now let's continue with this article. This feature is only available in [Just-in-Time (JIT)](https://tailwindcss.com/docs/just-in-time-mode) mode. Tailwind has first-party support for styling pseudo-elements like `before` and `after`:
+
+```html
+<div class="before:absolute before:bg-blue-500 after:flex after:bg-blue-300"></div>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+It has `content: ""` by default so you don't need to worry about that. Any time you use a `before` or `after` variant to make sure the elements are rendered, but you can override it using the content utilities which have full arbitrary value support:
+
+```html
+<div class="... before:block before:content-['hello']"></div>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+You can even grab the content from an attribute using the CSS `attr()` function:
+
+```html
+<div before="hello world" class="... before:block before:content-[attr(before)]"></div>
+```
+
+Enter fullscreen mode Exit fullscreen mode
+
+This can be super helpful when your content has spaces in it since spaces can't be used in CSS class names. You can use mostly any property with `before` and `after`
+
+### Conclusion
+
+Tailwind is the super awesome framework of CSS. According to me, it's the best so far. Everyone should learn it and it is very easy to learn and use. For more such articles consider a Follow.

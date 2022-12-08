@@ -1,0 +1,72 @@
+---
+title: Require ESM error
+date: '2022-11-17'
+tags: ['esm', 'nodejs', 'nextjs']
+draft: false
+summary: Options to fix require() esm error
+---
+
+## Error \[ERR_REQUIRE_ESM\]: require() not supported
+
+The error "\[ERR_REQUIRE_ESM\]: require() not supported" occurs because a package you are importing has been converted to be an ESM only package, which means that the package cannot be imported with `require()` anymore.
+
+![error err require esm require of es module](https://bobbyhadz.com/images/blog/javascript-error-err-require-esm-require-of-es-module-not-supported/error-err-require-esm-require-of-es-module.webp)
+
+**You can solve the "\[ERR_REQUIRE_ESM\]: require() not supported" by doing one of two things:**
+
+1.  Use ESM - use `import foo from 'foo'`, instead of `const foo = require('foo')` and add the following line to your `package.json` file: `"type": "module"`.
+2.  Downgrade to the last version of the package that is built with `CommonJS`. (Preferred approach if you're using TypeScript).
+
+The easiest way to solve the error if using `TypeScript` is to downgrade the version of the package to one that is built using CommonJS.
+
+You can see which package is causing the error by looking at the error message in your terminal. The error message in the screenshot above shows that the `node-fetch` package is causing the error.
+
+**If any of the following packages are causing the error click on the link to find the fix, otherwise keep reading:**
+
+- [node-fetch](https://bobbyhadz.com/blog/javascript-error-err-require-esm-of-es-module-node-fetch)
+- [chalk](https://bobbyhadz.com/blog/javascript-chalk-error-err-require-esm-of-es-module)
+- [gulp](https://bobbyhadz.com/blog/javascript-gulp-error-err-require-esm-of-es-module)
+- [got](https://bobbyhadz.com/blog/javascript-got-error-err-require-esm-of-es-module)
+
+If you go with using ES Modules, you won't be able to use the `require()` syntax to import any other packages and you need to update your import statements to ESM.
+
+```
+Copied!// 👇️ default import
+import fetch from 'node-fetch'
+
+// 👇️ named import
+import {myPackage} from 'my-package'
+
+```
+
+You also have to add the following line to your `package.json` file:
+
+```
+Copied!{
+  "type": "module",
+  // 👇️ ...rest
+}
+
+```
+
+You can read more about migrating from CommonJS to ESM by visiting this helpful [Github Readme](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c#how-can-i-move-my-commonjs-project-to-esm).
+
+At the time of writing, the best solution I've found (especially if using TypeScript) is to downgrade to the most recent version of the package that is built using CommonJS.
+
+For example, the `node-fetch` package has been converted to be an ESM only package in version `3`, so we have to downgrade to version `2.6.6`, which is the last version that is built with `CommonJS` which enables us to use the `require()` syntax.
+
+To downgrade a package to a specific version, open your terminal in the root directory of your project and run a command that installs the particular version.
+
+```
+Copied!npm install node-fetch@2.6.6
+
+# 👇️ NOTE: you only need this if using TypeScript
+npm install --save-dev @types/node-fetch@2.x
+
+```
+
+You can use the `npm install package@X.X.X` syntax to install a specific version of a package.
+
+Once you have installed a version of the package that is built using CommonJS, you will be able to import the package using `require()`.
+
+I strongly suggest you read this [GitHub Readme](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c#how-can-i-move-my-commonjs-project-to-esm) if you want to learn more about why this error occurs and possible fixes.

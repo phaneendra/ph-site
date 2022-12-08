@@ -1,0 +1,177 @@
+---
+title: Merging two Javascript Objects
+date: '2022-11-17'
+tags: ['javacript', 'code']
+draft: false
+summary: Learning how to merge two Javascript Objects.
+---
+
+# Merge two javascript objects
+
+**Summary**: in this tutorial, you will learn how to merge two or more JavaScript objects and create a new object that combines the properties of all the objects.
+
+To merge [objects](https://www.javascripttutorial.net/javascript-objects/) into a new one that has all [properties](https://www.javascripttutorial.net/javascript-object-properties/) of the merged objects, you have two options:
+
+- Use a spread operator ( `...`)
+- Use the `Object.assign()` method
+
+## Merge objects using the spread operator (`...`)
+
+[ES6](https://www.javascripttutorial.net/es6/) introduced the [spread operator](https://www.javascripttutorial.net/es6/javascript-spread/) (`...`) which can be used to merge two or more objects and create a new one that has properties of the merged objects.
+
+The following example uses the spread operator (`...`) to merge the `person` and `job` objects into the `employee` object:
+
+```JavaScript
+let person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+    ssn: '123-456-2356'
+};
+
+
+let job = {
+    jobTitle: 'JavaScript Developer',
+    location: 'USA'
+};
+
+let employee = {
+    ...person,
+    ...job
+};
+
+console.log(employee);
+```
+
+Output:
+
+```JavaScript
+{
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+    ssn: '123-456-2356',
+    jobTitle: 'JavaScript Developer',
+    location: 'USA'
+}
+```
+
+If objects have a property with the same name, then the right-most object property overwrites the previous one. For example:
+
+```JavaScript
+let job = {
+    jobTitle: 'JavaScript Developer',
+    country: 'USA'
+};
+
+let location = {
+    city: 'London',
+    country: 'England'
+};
+
+let remoteJob = {
+    ...job,
+    ...location
+};
+
+console.log(remoteJob);
+```
+
+Output:
+
+```JavaScript
+{
+    jobTitle: 'JavaScript Developer',
+    country: 'England',
+    city: 'London'
+}
+```
+
+In this example, the `job` and `location` has the same property `country`. When we merged these objects, the result object (`remoteJob`) has the `country` property with the value from the second object (`location`).
+
+## Merge objects using `Object.assign()` method
+
+The `Object.assign()` method allows you to copy all enumerable own properties from one or more source objects to a target object, and return the target object:
+
+```JavaScript
+Object.assign(target, sourceObj1, sourceObj2, ...);
+```
+
+Similar to spread operator ( `...`), if the source objects have the same property name, the later object will overwrite the previous object. See the following example:
+
+```JavaScript
+let person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+    ssn: '123-456-2356'
+};
+
+
+let job = {
+    jobTitle: 'JavaScript Developer',
+    country: 'USA'
+};
+
+
+let employee = Object.assign(person, job);
+console.log(employee);
+```
+
+Output:
+
+```JavaScript
+{
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+    ssn: '123-456-2356',
+    jobTitle: 'JavaScript Developer',
+    country: 'USA'
+}
+```
+
+## The Shallow Merge
+
+Both the spread operator ( `...`) and `Object.assign()` method perform a shallow merge. It means that if an object has a property that references to another object, the property of the original object and result target object will reference the same object. For example:
+
+```JavaScript
+let person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+    ssn: '123-456-2356',
+    contact: {
+        phone: '408-989-8745',
+        email: 'john.doe@example.com'
+    }
+};
+
+
+let job = {
+    jobTitle: 'JavaScript Developer',
+    location: 'USA'
+};
+
+let employee = { ...person,  ...job };
+
+console.log(employee.contact === person.contact);
+```
+
+Output:
+
+```JavaScript
+true
+```
+
+In this example, the `person` object has the `contact` property that references to an object. After merging, the `person` and `employee` object have the `contact` property that reference to the same object.
+
+## The Deep Merge
+
+To recursively merge own and inherited enumerable string keyed properties of source objects to a target object, you can use the [Lodash .\_merge()](https://www.npmjs.com/package/lodash.merge) method:
+
+```JavaScript
+_.merge(object, [sources])
+```
+
+In this tutorial, you have learned how to merge objects in JavaScript using the spread operator (`...`) and `Object.assign()` method.
