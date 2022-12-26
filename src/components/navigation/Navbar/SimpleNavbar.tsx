@@ -16,7 +16,7 @@ export const Navbar = (props: NavBarProps) => {
 
   return (
     <>
-      {data.headerNavLinks.map((link) => (
+      {data.headerNavLinks?.map((link) => (
         <Link key={link.title} href={link.href} className={classes}>
           {link.title}
         </Link>

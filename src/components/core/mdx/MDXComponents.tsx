@@ -1,6 +1,13 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { Link, Image, Button, Container, PreviewContainer } from "@/components";
+import {
+  Link,
+  Image,
+  Button,
+  Container,
+  PreviewContainer,
+  Swap,
+} from "@/components";
 import TOCInline from "@/components/TOCInline";
 import Pre from "@/components/Pre";
 import { BlogNewsletterForm } from "@/components/NewsletterForm";
@@ -25,4 +32,5 @@ export const MDXComponents = {
   Button,
   Container,
   PreviewContainer,
+  Swap,
 };

@@ -1,0 +1,60 @@
+---
+title: Swap
+date: "2022-11-27"
+tags: ["Swap", "design-system", "code"]
+draft: false
+summary: Swap allows you to toggle the visibility of two elements using a checkbox or a class name.
+---
+
+# Usage
+
+Swap allows you to toggle the visibility of two elements using a checkbox or a class name.
+
+## Basic Usage
+
+import { CgMenu, CgClose } from "react-icons/cg";
+import { BsFillEmojiAngryFill, BsFillEmojiSmileFill } from "react-icons/bs";
+
+<PreviewContainer>
+  <Swap onElement={<CgMenu size="32" />} offElement={<CgClose size="32" />} />
+</PreviewContainer>
+
+```javascript
+<Swap onElement={<CgMenu size="32" />} offElement={<CgClose size="32" />} />
+```
+
+## Rotate
+
+<PreviewContainer>
+  <Swap
+    rotate
+    onElement={<CgMenu size="32" />}
+    offElement={<CgClose size="32" />}
+  />
+</PreviewContainer>
+
+```javascript
+<Swap
+  rotate
+  onElement={<CgMenu size="32" />}
+  offElement={<CgClose size="32" />}
+/>
+```
+
+## Flip
+
+<PreviewContainer>
+  <Swap
+    flip
+    onElement={<BsFillEmojiAngryFill size="62" />}
+    offElement={<BsFillEmojiSmileFill size="62" />}
+  />
+</PreviewContainer>
+
+```javascript
+<Swap
+  flip
+  onElement={<BsFillEmojiAngryFill size="62" />}
+  offElement={<BsFillEmojiSmileFill size="62" />}
+/>
+```

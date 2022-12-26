@@ -1,5 +1,5 @@
 import { siteMetadatum } from "contentlayer/generated";
-import Logo from "@/data/assets/logo.svg";
+import Logo from "@/assets/logo.svg";
 import { Link } from "@/components";
 import SectionContainer from "./SectionContainer";
 import Footer from "./Footer";

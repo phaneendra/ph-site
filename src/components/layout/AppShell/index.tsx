@@ -1,59 +1,44 @@
-import { siteMetadatum } from 'contentlayer/generated';
-import headerNavLinks from '@/data/headerNavLinks';
-import Logo from '@/data/assets/logo.svg';
-import { Link } from '@/components';
-import { Container } from '@/components/layout/Container';
-import Footer from './Footer';
-import MobileNav from './MobileNav';
-import ThemeSwitch from './ThemeSwitch';
-import { ReactNode } from 'react';
+import { siteMetadatum } from "contentlayer/generated";
+import {
+  Container,
+  Header,
+  Drawer,
+  Burger,
+  MobileNav,
+  Footer,
+} from "@/components";
+import React, { useState } from "react";
+import type { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
 }
 
-const LayoutWrapper = ({ children }: Props) => {
+export const AppShell = (props: Props) => {
+  const { children, ...rest } = props;
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisible = () => {
+    setVisible(!visible);
+  };
+
+  const ToggleBurger = <Burger onClick={toggleVisible} />;
+  const DrawerSide = <MobileNav data={siteMetadatum} />;
+
   return (
     <Container>
-      <div className="flex h-screen flex-col justify-between">
-        <header className="flex items-center justify-between py-10">
-          <div>
-            <Link href="/" aria-label={siteMetadatum.headerTitle}>
-              <div className="flex items-center justify-between">
-                <div className="mr-3">
-                  <Logo height={32} width={32} className="fill-base-heading" />
-                </div>
-                {typeof siteMetadatum.headerTitle === 'string' ? (
-                  <div className="hidden h-6 text-2xl font-semibold text-base-heading sm:block ">
-                    {siteMetadatum.headerTitle}
-                  </div>
-                ) : (
-                  siteMetadatum.headerTitle
-                )}
-              </div>
-            </Link>
-          </div>
-          <div className="flex items-center text-base leading-5">
-            <div className="hidden sm:block">
-              {headerNavLinks.map((link) => (
-                <Link
-                  key={link.title}
-                  href={link.href}
-                  className="link-underline p-1 font-medium text-base-heading sm:p-4"
-                >
-                  {link.title}
-                </Link>
-              ))}
-            </div>
-            <ThemeSwitch />
-            <MobileNav />
-          </div>
-        </header>
+      <div className="flex h-screen flex-col justify-between"></div>
+
+      <Drawer
+        {...rest}
+        side={DrawerSide}
+        open={visible}
+        onClickOverlay={toggleVisible}
+      >
+        <Header data={siteMetadatum} burger={ToggleBurger} />
         <main className="mb-auto">{children}</main>
-        <Footer />
-      </div>
+        <Footer data={siteMetadatum} />
+      </Drawer>
     </Container>
   );
 };
-
-export default LayoutWrapper;

@@ -1,30 +1,38 @@
-import { Link } from '@/components';
-import { siteMetadatum } from 'contentlayer/generated';
-import SocialIcon from '@/components/social-icons';
+import { Link } from "@/components";
+import type { SiteMetadata } from "contentlayer/generated";
+import SocialIcon from "@/components/social-icons";
 
-export default function Footer() {
+export type FooterProps = React.HTMLAttributes<HTMLDivElement> & {
+  data: SiteMetadata;
+};
+
+export const Header = (props: FooterProps) => {
+  const { data, className } = props;
+
   return (
     <footer>
       <div className="mt-16 flex flex-col items-center">
         <div className="mb-3 flex space-x-4">
-          <SocialIcon kind="mail" href={`mailto:${siteMetadatum.email}`} size={6} />
-          <SocialIcon kind="github" href={siteMetadatum.github} size={6} />
-          <SocialIcon kind="facebook" href={siteMetadatum.facebook} size={6} />
-          <SocialIcon kind="youtube" href={siteMetadatum.youtube} size={6} />
-          <SocialIcon kind="linkedin" href={siteMetadatum.linkedin} size={6} />
-          <SocialIcon kind="twitter" href={siteMetadatum.twitter} size={6} />
+          <SocialIcon kind="mail" href={`mailto:${data.email}`} size={6} />
+          <SocialIcon kind="github" href={data.github} size={6} />
+          <SocialIcon kind="facebook" href={data.facebook} size={6} />
+          <SocialIcon kind="youtube" href={data.youtube} size={6} />
+          <SocialIcon kind="linkedin" href={data.linkedin} size={6} />
+          <SocialIcon kind="twitter" href={data.twitter} size={6} />
         </div>
         <div className="mb-2 flex space-x-2 text-sm text-base-content">
-          <div>{siteMetadatum.author}</div>
+          <div>{data.author}</div>
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadatum.title}</Link>
+          <Link href="/">{data.title}</Link>
         </div>
         <div className="mb-8 text-sm text-base-content">
-          <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">Tailwind Nextjs Theme</Link>
+          <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">
+            Tailwind Nextjs Theme
+          </Link>
         </div>
       </div>
     </footer>
   );
-}
+};
